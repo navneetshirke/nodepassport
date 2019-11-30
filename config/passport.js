@@ -4,6 +4,7 @@ var GoogleStrategy = require( 'passport-google-oauth2' ).Strategy;
 const User = require('../models/User');
 const bcrypt = require('bcryptjs');
 var pry = require('pry')
+const secret = require('./secretkeys')
 
 module.exports = function(passport) {
 
@@ -26,14 +27,11 @@ module.exports = function(passport) {
     })
     );
 
-  clientID =  '414580605876166',
-  clientSecret =  '7a6501f9f6cf7bc969804f49b22351c1',
-  callbackURL =  "http://localhost:3000/users/auth/facebook/callback"
 
   passport.use(new FacebookStrategy({
-    clientID: clientID,
-    clientSecret: clientSecret,
-    callbackURL: callbackURL,
+    clientID: secret.fb.clientID,
+    clientSecret: secret.fb.clientSecret,
+    callbackURL: secret.fb.callbackURL,
     profileFields: ['id', 'displayName', 'link', 'photos', 'email']
   },
   function(accessToken, refreshToken, profile, done) {
@@ -56,9 +54,9 @@ module.exports = function(passport) {
   ));
 
   passport.use(new GoogleStrategy({
-   clientID: '1001495843695-9q2fi1dhu8i48t7tmjehc0ljhkmucrd1.apps.googleusercontent.com',
-   clientSecret: 'uLtbIa6z8aupODjGVvfk9Ewz',
-   callbackURL: "http://localhost:3000/users/auth/google/callback",
+   clientID: secret.google.clientID,
+    clientSecret: secret.google.clientSecret,
+    callbackURL: secret.google.callbackURL,
    passReqToCallback   : true
  },
   function(request, accessToken, refreshToken, profile, done) {

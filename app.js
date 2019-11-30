@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const passport = require('passport');
 const flash = require('connect-flash');
 const session = require('express-session');
-
+var pry = require('pry')
 const app = express();
 
 // Passport Config
@@ -14,13 +14,9 @@ require('./config/passport')(passport);
 const db = require('./config/keys').mongoURI;
 
 // Connect to MongoDB
-mongoose
-  .connect(
-    db,
-    { useNewUrlParser: true }
-  )
-  .then(() => console.log('MongoDB Connected'))
-  .catch(err => console.log(err));
+mongoose.connect(db,{ useNewUrlParser: true })
+.then(() => console.log('MongoDB Connected'))
+.catch(err => console.log(err));
 
 // EJS
 app.use(expressLayouts);
@@ -36,7 +32,7 @@ app.use(
     resave: true,
     saveUninitialized: true
   })
-);
+  );
 
 // Passport middleware
 app.use(passport.initialize());
